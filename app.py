@@ -100,7 +100,7 @@ def get_data(file_name, passphrase):
     key_name = input(Fore.LIGHTYELLOW_EX + "Key_Name: ")
     for item in json_data:
         if item["key"] == key_name:
-            print(Fore.LIGHTGREEN_EX + json.dumps(item, indent=4, separators=(',', ': ')))
+            print(Fore.LIGHTBLACK_EX + json.dumps(item, indent=4, separators=(',', ': ')))
             return
     print(Fore.LIGHTRED_EX + "No Data Found!")
     print(Style.RESET_ALL)
