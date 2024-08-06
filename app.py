@@ -119,6 +119,9 @@ def print_options():
 def main():
     """The execution starts from here"""
 
+    if not os.path.exists(data_path):
+        os.mkdir(data_path)
+
     print_options()
     user_input = input("Select from above: ")
 
@@ -127,27 +130,27 @@ def main():
             number = int(user_input)
             if number < 1 or number > 4:
                 print(Fore.LIGHTRED_EX + "Please choose options from 1, 2, 3, or 4\n")
-                user_input = input(Fore.LIGHTCYAN_EX + "Try Again: ")
+                user_input = input(Fore.LIGHTBLACK_EX + "Try Again: ")
             else:
                 break
         except ValueError:
             print(Fore.LIGHTRED_EX + "Invalid input. Please enter a number.\n")
-            user_input = input(Fore.LIGHTCYAN_EX + "Try Again: ")
+            user_input = input(Fore.LIGHTBLACK_EX + "Try Again: ")
 
     print(Style.RESET_ALL)
     number = int(user_input)
 
     if number == 1:
         new_file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass("Passphrase: ")
+        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
         create_new_file(new_file_name, passphrase)
     elif number == 2:
         file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass("Passphrase: ")
+        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
         add_new_data(file_name, passphrase)
     elif number == 3:
         file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass("Passphrase: ")
+        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
         get_data(file_name, passphrase)
     elif number == 4:
         return
