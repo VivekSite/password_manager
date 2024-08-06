@@ -73,7 +73,7 @@ def add_new_data(file_name, passphrase):
         print("")
 
     json_data.append(new_data)
-    json_data = str(json_data).replace('\'', '"')
+    json_data = str(json_data).replace("'", '"')
 
     gpg.encrypt(
         json_data,
@@ -97,10 +97,12 @@ def get_data(file_name, passphrase):
     if json_data is None:
         return
 
-    key_name = input(Fore.LIGHTYELLOW_EX + "Key_Name: ")
+    object_key = input(Fore.LIGHTYELLOW_EX + "Object_Key: ")
     for item in json_data:
-        if item["key"] == key_name:
-            print(Fore.LIGHTBLACK_EX + json.dumps(item, indent=4, separators=(',', ': ')))
+        if item["key"] == object_key:
+            print(
+                Fore.LIGHTBLACK_EX + json.dumps(item, indent=4, separators=(",", ": "))
+            )
             return
     print(Fore.LIGHTRED_EX + "No Data Found!")
     print(Style.RESET_ALL)
@@ -116,14 +118,8 @@ def print_options():
     print(Style.RESET_ALL)
 
 
-def main():
-    """The execution starts from here"""
-
-    if not os.path.exists(data_path):
-        os.mkdir(data_path)
-
-    print_options()
-    user_input = input("Select from above: ")
+def validate_user_input(user_input):
+    """ This function validates the user input"""
 
     while True:
         try:
@@ -137,23 +133,54 @@ def main():
             print(Fore.LIGHTRED_EX + "Invalid input. Please enter a number.\n")
             user_input = input(Fore.LIGHTBLACK_EX + "Try Again: ")
 
-    print(Style.RESET_ALL)
-    number = int(user_input)
 
-    if number == 1:
-        new_file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
-        create_new_file(new_file_name, passphrase)
-    elif number == 2:
-        file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
-        add_new_data(file_name, passphrase)
-    elif number == 3:
-        file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-        passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
-        get_data(file_name, passphrase)
-    elif number == 4:
-        return
+def main():
+    """The execution starts from here"""
+
+    if not os.path.exists(data_path):
+        os.mkdir(data_path)
+
+    current_passphrase = None
+    current_file = None
+
+    while True:
+        print_options()
+        user_input = input("Select from above: ")
+        validate_user_input(user_input)
+
+        print(Style.RESET_ALL)
+        number = int(user_input)
+
+        if number == 1:
+            new_file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
+            new_passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
+            create_new_file(new_file_name, new_passphrase)
+            current_passphrase = None
+            current_file = None
+
+        elif number == 2:
+            if current_file is None:
+                current_file = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
+            if current_passphrase is None:
+                current_passphrase = getpass.getpass(
+                    Fore.LIGHTBLACK_EX + "Passphrase: "
+                )
+
+            add_new_data(current_file, current_passphrase)
+
+        elif number == 3:
+            if current_file is None:
+                current_file = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
+            if current_passphrase is None:
+                current_passphrase = getpass.getpass(
+                    Fore.LIGHTBLACK_EX + "Passphrase: "
+                )
+
+            get_data(current_file, current_passphrase)
+            print()
+
+        elif number == 4:
+            return
 
 
 main()
