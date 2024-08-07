@@ -104,7 +104,6 @@ def get_data(file_name, passphrase):
     print(Style.RESET_ALL)
 
 
-
 def print_options():
     """Print options on the command line"""
 
