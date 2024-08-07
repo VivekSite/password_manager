@@ -3,6 +3,7 @@
 import getpass
 import json
 import os
+import re
 import gnupg
 from colorama import init, Fore, Style
 
@@ -73,10 +74,9 @@ def add_new_data(file_name, passphrase):
         print("")
 
     json_data.append(new_data)
-    json_data = str(json_data).replace("'", '"')
 
     gpg.encrypt(
-        json_data,
+        json.dumps(json_data, indent=4, separators=(",", ": ")),
         recipients=None,
         symmetric="AES256",
         passphrase=passphrase,
@@ -98,14 +98,11 @@ def get_data(file_name, passphrase):
         return
 
     object_key = input(Fore.LIGHTYELLOW_EX + "Object_Key: ")
-    for item in json_data:
-        if item["key"] == object_key:
-            print(
-                Fore.LIGHTBLACK_EX + json.dumps(item, indent=4, separators=(",", ": "))
-            )
-            return
-    print(Fore.LIGHTRED_EX + "No Data Found!")
+    regex = re.compile(object_key, re.IGNORECASE)
+    result = [data for data in json_data if regex.search(data["key"])]
+    print(Fore.LIGHTBLACK_EX + json.dumps(result, indent=4, separators=(",", ": ")))
     print(Style.RESET_ALL)
+
 
 
 def print_options():
@@ -119,7 +116,7 @@ def print_options():
 
 
 def validate_user_input(user_input):
-    """ This function validates the user input"""
+    """This function validates the user input"""
 
     while True:
         try:
