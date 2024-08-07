@@ -50,14 +50,14 @@ pip install -r requirements.txt
 ```
 - Now run the program
 ```
-chmod +x secrets.sh
-./secrets.sh
+chmod +x start.sh
+./start.sh
 ```
 
 # How To Use
 - After running the program you will see these options:
 ```
-❯ ./secrets.sh
+❯ ./start.sh
 1. Create new file
 2. Add data
 3. Get data
