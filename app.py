@@ -12,6 +12,7 @@ init()
 path = os.path.join(os.getcwd(), "../.gnupg")
 data_path = os.path.join(os.getcwd(), ".pass_storage")
 gpg = gnupg.GPG(gnupghome=path)
+auth_data = {"current_passphrase": None, "current_file": None}
 
 
 def create_new_file(file_name, passphrase):
@@ -59,6 +60,8 @@ def add_new_data(file_name, passphrase):
 
     json_data = decrypt_json(actual_file_path, passphrase)
     if json_data is None:
+        auth_data["current_file"] = None
+        auth_data["current_passphrase"] = None
         return
 
     new_data = {}
@@ -95,6 +98,8 @@ def get_data(file_name, passphrase):
 
     json_data = decrypt_json(actual_file_path, passphrase)
     if json_data is None:
+        auth_data["current_file"] = None
+        auth_data["current_passphrase"] = None
         return
 
     object_key = input(Fore.LIGHTYELLOW_EX + "Object_Key: ")
@@ -136,9 +141,6 @@ def main():
     if not os.path.exists(data_path):
         os.mkdir(data_path)
 
-    current_passphrase = None
-    current_file = None
-
     while True:
         print_options()
         user_input = input("Select from above: ")
@@ -151,28 +153,28 @@ def main():
             new_file_name = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
             new_passphrase = getpass.getpass(Fore.LIGHTBLACK_EX + "Passphrase: ")
             create_new_file(new_file_name, new_passphrase)
-            current_passphrase = None
-            current_file = None
+            auth_data["current_passphrase"] = None
+            auth_data["current_file"] = None
 
         elif number == 2:
-            if current_file is None:
-                current_file = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-            if current_passphrase is None:
-                current_passphrase = getpass.getpass(
+            if auth_data["current_file"] is None:
+                auth_data["current_file"] = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
+            if auth_data["current_passphrase"] is None:
+                auth_data["current_passphrase"] = getpass.getpass(
                     Fore.LIGHTBLACK_EX + "Passphrase: "
                 )
 
-            add_new_data(current_file, current_passphrase)
+            add_new_data(auth_data["current_file"], auth_data["current_passphrase"])
 
         elif number == 3:
-            if current_file is None:
-                current_file = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
-            if current_passphrase is None:
-                current_passphrase = getpass.getpass(
+            if auth_data["current_file"] is None:
+                auth_data["current_file"] = input(Fore.LIGHTYELLOW_EX + "File_Name: ")
+            if auth_data["current_passphrase"] is None:
+                auth_data["current_passphrase"] = getpass.getpass(
                     Fore.LIGHTBLACK_EX + "Passphrase: "
                 )
 
-            get_data(current_file, current_passphrase)
+            get_data(auth_data["current_file"], auth_data["current_passphrase"])
             print()
 
         elif number == 4:
