@@ -32,6 +32,17 @@ T6PU7GzFXMUVhsvBIRGa0Kyd0ZLFmiXJipYRFysmDbHJ/1l1iY+LcwU=
 - This Password is stored in the `.pass_storage` directory in the root directory.
 
 # Setup the project
+- Make sure that you have `GnuPG` installed on you system
+- Enter this command in terminal to check if it installed or not `gpg --version`
+- If Not then install it
+```
+// For Linux
+sudo apt install gnupg
+
+// For MacOS
+sudo brew install gnupg
+
+```
 - Clone the repository
 ```
 git clone https://github.com/VivekSite/password_manager.git
