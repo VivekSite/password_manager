@@ -11,10 +11,11 @@ def print_options():
     """Print options on the command line"""
 
     print(Fore.LIGHTYELLOW_EX + "1. Create new file")
-    print(Fore.LIGHTYELLOW_EX + "2. List files")
-    print(Fore.LIGHTYELLOW_EX + "3. Add data")
-    print(Fore.LIGHTYELLOW_EX + "4. Get data")
-    print(Fore.LIGHTYELLOW_EX + "5. Exit")
+    print(Fore.LIGHTYELLOW_EX + "2. List object keys")
+    print(Fore.LIGHTYELLOW_EX + "3. List files")
+    print(Fore.LIGHTYELLOW_EX + "4. Add data")
+    print(Fore.LIGHTYELLOW_EX + "5. Get data")
+    print(Fore.LIGHTYELLOW_EX + "6. Exit")
 
 
 def exitHandler(message):
@@ -43,7 +44,7 @@ def getConfigData():
 def take_option_input():
     """Takes input from the user for options and return the user input"""
 
-    pattern = r"^[1-5]$"
+    pattern = r"^[1-6]$"
     while True:
         user_input = input(Fore.CYAN + "Select from above: ")
         if re.match(pattern, user_input):

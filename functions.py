@@ -64,7 +64,7 @@ def print_files():
     ]
 
     for file in filenames:
-        print(Fore.LIGHTCYAN_EX + f"- {file}")
+        print(Fore.LIGHTGREEN_EX + f"- {file}")
     print("")
 
 
@@ -128,3 +128,31 @@ def get_data():
     result = [data for data in json_data if regex.search(data["key"])]
     print(Fore.LIGHTBLACK_EX + json.dumps(result, indent=4, separators=(",", ": ")))
     print("")
+
+
+def get_object_list():
+    """Get list of object ids present in the file."""
+
+    # check if encryption key is present or not
+    check_if_aes_key_present(aes_key_path)
+
+    file_name = take_file_name()
+    file_path = os.path.join(storage_path, f"{file_name}.json.enc")
+
+    if not os.path.exists(file_path):
+        print(Fore.LIGHTRED_EX + "File Does not exists!")
+        return
+
+    # Decrypt the file data
+    aes_key = decrypt_key()
+    json_data = decrypt_file(file_path, aes_key)
+
+    # Get the list of keys
+    object_keys = [obj.get("key") for obj in json_data]
+
+    # Display data
+    print(Fore.LIGHTGREEN_EX + f"File: {file_name}------------------------------")
+    for key in object_keys:
+        print(Fore.LIGHTGREEN_EX + f"- {key}")
+    print("")
+

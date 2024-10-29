@@ -1,7 +1,7 @@
 import os
 from colorama import init, Fore
 from utils import print_options, take_option_input, exitHandler, getConfigData
-from functions import create_new_file, print_files, add_data, get_data
+from functions import create_new_file, print_files, add_data, get_data, get_object_list
 
 # Initialize colorama
 init(autoreset=True)
@@ -29,12 +29,14 @@ def main():
         if user_input == "1":
             create_new_file()
         elif user_input == "2":
-            print_files()
+            get_object_list()
         elif user_input == "3":
-            add_data()
+            print_files()
         elif user_input == "4":
-            get_data()
+            add_data()
         elif user_input == "5":
+            get_data()
+        elif user_input == "6":
             os._exit(1)
         else:
             print(Fore.LIGHTRED_EX + "Please choose appropriate option!")
