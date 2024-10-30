@@ -11,23 +11,22 @@ git clone https://github.com/VivekSite/password_manager.git
 ```
 - Step 2: Install dependencies
 ```
-pip install -r requirements.txt
+pip install -r requirement.txt
 ```
 - Step 3: Now run the program
 ```
-chmod +x start.sh
 ./start.sh
 ```
 
 # How To Use
-- Before running the program we have to make some configurations.
+- Before running the program make sure you have your configuration file ready.
 - Create a .config file `touch .config` and put this configurations.
 ```
 {
-  "private_key_path": "~/secret_manager/private_key.pem",
-  "public_key_path": "~/secret_manager/public_key.pem",
-  "storage_path": "~/secret_manager/.storage",
-  "aes_key_path": "~/secret_manager/aes_key.bin"
+  "private_key_path": "~/password_manager/private_key.pem",
+  "public_key_path": "~/password_manager/public_key.pem",
+  "storage_path": "~/password_manager/.storage",
+  "aes_key_path": "~/password_manager/aes_key.bin"
 }
 ```
 - here we have to configure the path to private and public key(we will create it later).
@@ -37,14 +36,12 @@ chmod +x start.sh
 ## Generate private and public keys
 - Run following command to generate keys. Keys will get stored on configured path.
 ```
-chmod +x gen-private-key.sh
 ./gen-private-key.sh
 ```
 
 ## Generate encryption key
 - Run following command to generate encryption key. It will get stored on configured path in encrypted format.
 ```
-chmod +x gen-aes-key.sh
 ./gen-aes-key.sh
 ```
 
@@ -120,6 +117,7 @@ File: test------------------------------
 
 ## Option 5: Get data
 - Using option 5 you can view your stored data by using the `Object_Key`
+- Object_Key search is case insensitive and it will return all the matching Objects.
 ```
 Select from above: 5
 File name: test
